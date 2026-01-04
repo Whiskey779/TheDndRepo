@@ -1,5 +1,5 @@
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 add_library(backend STATIC ${SRC_FILES})
 target_include_directories(backend PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-find_package(SQLite3 REQUIRED)
-target_link_libraries(backend PRIVATE SQLite::SQLite3)
+add_subdirectory(SQLiteCpp)
+target_link_libraries(backend PRIVATE SQLiteCpp)
