@@ -1,6 +1,7 @@
 #include <iostream>
+#include "backend.hpp"
 
 int main(){
-    std::cout << "Hello World\n";
+    Hello("Hello this is the backend!");
     return 0;
 }
