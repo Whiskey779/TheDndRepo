@@ -25,6 +25,7 @@ namespace Backend{
     }
 
     void Backend::AddStatBlock(StatBlock sb){
+        /*
         SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks(name, armorClass, hitpoint, str, dex, con, int, wis, cha) VALUES(:name, :armorClass, :hitpoint, :str, :dex, :con, :int, :wis, :cha)");
         addStatBlock.bind(":name", sb.name);
         addStatBlock.bind(":armorClass", sb.armorClass);
@@ -36,5 +37,12 @@ namespace Backend{
         addStatBlock.bind(":wis", sb.wisdom);
         addStatBlock.bind(":cha", sb.charisma);
         addStatBlock.exec();
+        */
+       SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks VALUES ('Weasel', 13, 1, 3, 16, 8, 2, 12, 3)");
+       try{
+        addStatBlock.exec();
+       } catch(const std::exception& e){
+        std::cerr << "SQLite error: " << e.what() << '\n';
+       }
     }
 };
