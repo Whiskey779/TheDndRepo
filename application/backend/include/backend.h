@@ -9,6 +9,7 @@ namespace Backend{
         public:
             Backend();
             std::vector<StatBlock> GetAllStatBlocks();
+            void AddStatBlock(StatBlock);
         private:
             SQLite::Database db;
 

@@ -23,4 +23,18 @@ namespace Backend{
         }
         return list;
     }
+
+    void Backend::AddStatBlock(StatBlock sb){
+        SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks(name, armorClass, hitpoint, str, dex, con, int, wis, cha) VALUES(:name, :armorClass, :hitpoint, :str, :dex, :con, :int, :wis, :cha)");
+        addStatBlock.bind(":name", sb.name);
+        addStatBlock.bind(":armorClass", sb.armorClass);
+        addStatBlock.bind(":hitpoint", sb.hitPoint);
+        addStatBlock.bind(":str", sb.strength);
+        addStatBlock.bind(":dex", sb.dexterity);
+        addStatBlock.bind(":con", sb.constitution);
+        addStatBlock.bind(":int", sb.intellgence);
+        addStatBlock.bind(":wis", sb.wisdom);
+        addStatBlock.bind(":cha", sb.charisma);
+        addStatBlock.exec();
+    }
 };
