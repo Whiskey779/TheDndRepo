@@ -6,4 +6,4 @@ namespace Backend{
             std::string name;
             u_int32_t armorClass, hitPoint, strength, dexterity, constitution, intellgence, wisdom, charisma;
     };
-};
+}

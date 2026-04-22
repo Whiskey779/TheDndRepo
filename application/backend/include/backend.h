@@ -12,8 +12,5 @@ namespace Backend{
             void AddStatBlock(StatBlock);
         private:
             SQLite::Database db;
-
-
     };
-
-};
+}

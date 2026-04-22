@@ -2,11 +2,11 @@
 
 namespace Backend{
     Backend::Backend(): db("main.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE){
-        db.exec("CREATE TABLE IF NOT EXISTS statBlocks(name TEXT, armorClass TINYINT, hitPoint TINYINT, str TINYINT, dex TINYINT, con TINYINT, int TINYINT, wis TINYINT, cha TINYINT)");
+        db.exec("CREATE TABLE IF NOT EXISTS statBlocks(id INTEGER PRIMARY KEY, name TEXT, armorClass TINYINT, hitPoint TINYINT, str TINYINT, dex TINYINT, con TINYINT, int TINYINT, wis TINYINT, cha TINYINT)");
     }
 
     std::vector<StatBlock> Backend::GetAllStatBlocks(){
-        SQLite::Statement getAll(db, "SELECT * FROM statBlocks");
+        SQLite::Statement getAll(db, "SELECT * FROM statBlocks ORDER BY name ASC");
         std::vector<StatBlock> list;
         StatBlock temp;
         while(getAll.executeStep()){
@@ -25,7 +25,13 @@ namespace Backend{
     }
 
     void Backend::AddStatBlock(StatBlock sb){
-        /*
+        SQLite::Statement allreadyExists(db, "SELECT 1 FROM statBlocks WHERE name = ? LIMIT 1");
+        allreadyExists.bind(1, sb.name);
+        if(allreadyExists.executeStep()){
+            std::cerr << "ERROR: Stat Block all ready Exists\n";
+            return;
+        }
+
         SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks(name, armorClass, hitpoint, str, dex, con, int, wis, cha) VALUES(:name, :armorClass, :hitpoint, :str, :dex, :con, :int, :wis, :cha)");
         addStatBlock.bind(":name", sb.name);
         addStatBlock.bind(":armorClass", sb.armorClass);
@@ -36,9 +42,6 @@ namespace Backend{
         addStatBlock.bind(":int", sb.intellgence);
         addStatBlock.bind(":wis", sb.wisdom);
         addStatBlock.bind(":cha", sb.charisma);
-        addStatBlock.exec();
-        */
-       SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks VALUES ('Weasel', 13, 1, 3, 16, 8, 2, 12, 3)");
        try{
         addStatBlock.exec();
        } catch(const std::exception& e){
