@@ -2,7 +2,7 @@
 
 namespace Backend{
     Backend::Backend(): db("main.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE){
-        db.exec("CREATE TABLE IF NOT EXISTS statBlocks(id INTEGER PRIMARY KEY, name TEXT, armorClass TINYINT, hitPoint TINYINT, str TINYINT, dex TINYINT, con TINYINT, int TINYINT, wis TINYINT, cha TINYINT)");
+        db.exec("CREATE TABLE IF NOT EXISTS statBlocks(id INTEGER PRIMARY KEY, name TEXT, cr REAL, armorClass TINYINT, hitPoint TINYINT, str TINYINT, dex TINYINT, con TINYINT, int TINYINT, wis TINYINT, cha TINYINT)");
     }
 
     std::vector<StatBlock> Backend::GetAllStatBlocks(){
@@ -11,6 +11,7 @@ namespace Backend{
         StatBlock temp;
         while(getAll.executeStep()){
             temp.name = getAll.getColumn("name").getString();
+            temp.cr = getAll.getColumn("cr").getDouble();
             temp.armorClass = getAll.getColumn("armorClass").getUInt();
             temp.hitPoint = getAll.getColumn("hitPoint").getUInt();
             temp.strength = getAll.getColumn("str").getUInt();
@@ -32,8 +33,9 @@ namespace Backend{
             return;
         }
 
-        SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks(name, armorClass, hitpoint, str, dex, con, int, wis, cha) VALUES(:name, :armorClass, :hitpoint, :str, :dex, :con, :int, :wis, :cha)");
+        SQLite::Statement addStatBlock(db, "INSERT INTO statBlocks(name, cr, armorClass, hitpoint, str, dex, con, int, wis, cha) VALUES(:name, :cr, :armorClass, :hitpoint, :str, :dex, :con, :int, :wis, :cha)");
         addStatBlock.bind(":name", sb.name);
+        addStatBlock.bind(":cr", sb.cr);
         addStatBlock.bind(":armorClass", sb.armorClass);
         addStatBlock.bind(":hitpoint", sb.hitPoint);
         addStatBlock.bind(":str", sb.strength);

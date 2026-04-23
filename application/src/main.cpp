@@ -46,24 +46,25 @@ int main(){
             while(std::getline(ss, arg, ' ')){
                 input.push_back(arg);
             }
-            if(input.size() < 9){
+            if(input.size() < 10){
                 std::cout << "ERROR: Add Is Missing Args\n";
                 continue;
             }
-            else if(input.size() > 9){
+            else if(input.size() > 10){
                 std::cout << "ERROR: Too Many Args For Add\n";
                 continue;
             }
             try{
                 temp.name = input[0];
-                temp.armorClass = std::stoi(input[1]);
-                temp.hitPoint = std::stoi(input[2]);
-                temp.strength = std::stoi(input[3]);
-                temp.dexterity = std::stoi(input[4]);            
-                temp.constitution = std::stoi(input[5]);
-                temp.intellgence = std::stoi(input[6]);
-                temp.wisdom = std::stoi(input[7]);
-                temp.charisma = std::stoi(input[8]);
+                temp.cr = std::stod(input[1]);
+                temp.armorClass = std::stoi(input[2]);
+                temp.hitPoint = std::stoi(input[3]);
+                temp.strength = std::stoi(input[4]);
+                temp.dexterity = std::stoi(input[5]);            
+                temp.constitution = std::stoi(input[6]);
+                temp.intellgence = std::stoi(input[7]);
+                temp.wisdom = std::stoi(input[8]);
+                temp.charisma = std::stoi(input[9]);
                 backend.AddStatBlock(temp);
             } catch(const std::invalid_argument& ia){
                 std::cerr << "Invalid argiment: " << ia.what() << '\n';
