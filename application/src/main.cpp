@@ -10,7 +10,7 @@ struct Command{
 
 Command GetInput(){
     std::string input;
-    std::cout << "TheDndRepo> ";
+    std::cout << "\033[31mTheDndRepo> \033[0m";
     std::getline(std::cin, input);
     auto space = input.find_first_of(' ');
     if(space != std::string::npos){
@@ -33,7 +33,13 @@ int main(){
         }
 
         if(cmd.cmd == "list"){
-            std::vector<Backend::StatBlock> list = backend.GetAllStatBlocks();
+            std::vector<Backend::StatBlock> list;
+            if(cmd.arg.length() > 0){
+                list = backend.SeachByName(cmd.arg);
+            }
+            else{
+                list = backend.GetAllStatBlocks();
+            }
             for(auto statBlock = list.begin(); statBlock != list.end(); ++statBlock){
                 std::cout << statBlock->name << ") AC: " << statBlock->armorClass << " HP: " << statBlock->hitPoint << '\n';
             }

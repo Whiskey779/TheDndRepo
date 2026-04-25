@@ -10,6 +10,7 @@ namespace Backend{
             Backend();
             std::vector<StatBlock> GetAllStatBlocks();
             void AddStatBlock(StatBlock);
+            std::vector<StatBlock> SeachByName(std::string);
         private:
             SQLite::Database db;
     };
